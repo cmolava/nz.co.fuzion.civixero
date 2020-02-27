@@ -6,13 +6,33 @@
  * @see http://wiki.civicrm.org/confluence/display/CRMDOC43/QuickForm+Reference
  */
 class CRM_Civixero_Form_XeroSettings extends CRM_Core_Form {
+
   private $_settingFilter = array('group' => 'xero');
   //everything from this line down is generic & can be re-used for a setting form in another extension
   //actually - I lied - I added a specific call in getFormSettings
   private $_submittedValues = array();
   private $_settings = array();
+  
+  function preProcess() {
+
+  }
+
+  function addAuthorizationLink() {
+    $settings = $this->setDefaultValues();
+    dpm($settings);
+    if (!empty($settings['xero_client_id']) && !empty($settings['xero_secret'])) {
+      if (empty($settings['xero_refresh_token']) || empty($settings['xero_tenant_id'])) {
+        $this->add('link', 'authorize_link', 'Authorize with Xero', 'https://xero.com/');
+        
+      }
+    }
+
+  }
+
   function buildQuickForm() {
     $settings = $this->getFormSettings();
+    dpm($settings);
+    $this->addAuthorizationLink();
     foreach ($settings as $name => $setting) {
       if (isset($setting['quick_form_type'])) {
         $add = 'add' . $setting['quick_form_type'];
@@ -118,4 +138,5 @@ class CRM_Civixero_Form_XeroSettings extends CRM_Core_Form {
     }
     return $defaults;
   }
+
 }

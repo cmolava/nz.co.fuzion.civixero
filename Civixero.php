@@ -7,6 +7,10 @@ require_once 'Civixero.civix.php';
  */
 function civixero_civicrm_config(&$config) {
   _civixero_civix_civicrm_config($config);
+  require_once __DIR__ . '/vendor/autoload.php';
+  if (!function_exists('random_bytes')) {
+    require_once(__DIR__ . '/vendor/paragonie/random_compat/lib/random.php');
+  }
 }
 
 /**
@@ -202,6 +206,14 @@ function civixero_civicrm_navigationMenu(&$menu) {
     'url' => 'civicrm/xero/errorlog?for=invoice',
     'permission' => 'administer CiviCRM',
     'operator' => null,
+    'separator' => 0,
+  ]);
+  _Civixero_civix_insert_navigation_menu($menu, 'Administer/Xero/', [
+    'label' => 'Xero Authorize',
+    'name' => 'Xero Authorize',
+    'url' => 'civicrm/xero/authorize',
+    'permission' => 'administer CiviCRM',
+    'operator' => NULL,
     'separator' => 0,
   ]);
 }

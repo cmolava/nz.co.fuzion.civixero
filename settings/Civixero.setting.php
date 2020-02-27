@@ -7,16 +7,18 @@ $invoice_statuses = array(
   );
 
 return array(
-  'xero_key' => array(
+  // Removed settings.
+  // xero_key, xero_public_certificate.
+  'xero_client_id' => array(
     'group_name' => 'Xero Settings',
     'group' => 'xero',
-    'name' => 'xero_key',
+    'name' => 'xero_client_id',
     'type' => 'String',
     'add' => '4.4',
     'is_domain' => 1,
     'is_contact' => 0,
-    'description' => 'Xero Key',
-    'title' =>  'Xero Key',
+    'description' => 'Xero Client ID',
+    'title' => 'Xero Client ID',
     'help_text' => '',
     'html_type' => 'Text',
     'html_attributes' => array(
@@ -24,16 +26,17 @@ return array(
     ),
     'quick_form_type' => 'Element',
   ),
-  'xero_secret' => array(
+  // OAuth 2.0 xero (Client) Secret
+  'xero_client_secret' => array(
     'group_name' => 'Xero Settings',
     'group' => 'xero',
-    'name' => 'xero_secret',
+    'name' => 'xero_client_secret',
     'type' => 'String',
     'add' => '4.4',
     'is_domain' => 1,
     'is_contact' => 0,
-    'description' => 'Xero Secret',
-    'title' => 'Xero Secret',
+    'description' => 'Xero Client Secret',
+    'title' => 'Xero Client Secret',
     'help_text' => '',
     'html_type' => 'Text',
     'html_attributes' => array(
@@ -41,39 +44,43 @@ return array(
     ),
     'quick_form_type' => 'Element',
   ),
-  'xero_public_certificate' => array(
+  // OAuth 2.0, No UI. Retrieved and stored on Authentication/Refresh.
+  // Temporary, lifespan 30 mins.
+  // Stored as serialized array.
+  // Can be used to initialize League\OAuth2\Client\Token\AccessToken().
+  // Includes refresh_token property so should always be stored even if expired.
+  'xero_access_token' => array(
     'group_name' => 'Xero Settings',
     'group' => 'xero',
-    'name' => 'xero_public_certificate',
-    'type' => 'Text',
-    'add' => '4.4',
-    'is_domain' => 1,
-    'is_contact' => 0,
-    'title' => 'Xero Public Certificate Path',
-    'description' => 'Enter the full path to your public Certificate',
-    'help_text' => '',
-    'html_type' => 'Text',
-    'html_attributes' => array(
-      'size' => 50,
-    ),
-    'quick_form_type' => 'Element',
-  ),
-  'xero_private_key' => array(
-    'group_name' => 'Xero Settings',
-    'group' => 'xero',
-    'name' => 'xero_private_key',
+    'name' => 'xero_access_token',
     'type' => 'String',
     'add' => '4.4',
     'is_domain' => 1,
     'is_contact' => 0,
-    'title' => 'Xero Private Key Path',
-    'description' => 'Enter the full path to your private Key',
+    'description' => 'Xero Access Token',
+    'title' => 'Xero Access Token',
+    'help_text' => '',
+    // No form element
+  ),
+  // OAuth 2.0. Obtained via api request to Xero.
+  // We expose this so it can be cleared out.
+  'xero_tenant_id' => array(
+    'group_name' => 'Xero Settings',
+    'group' => 'xero',
+    'name' => 'xero_tenant_id',
+    'type' => 'String',
+    'add' => '4.4',
+    'is_domain' => 1,
+    'is_contact' => 0,
+    'description' => 'Xero Tenant ID (Organization)',
+    'title' => 'Xero Tenant ID',
     'help_text' => '',
     'html_type' => 'Text',
     'html_attributes' => array(
       'size' => 50,
     ),
     'quick_form_type' => 'Element',
+    // No form element.
   ),
   'xero_default_revenue_account' => array(
     'group_name' => 'Xero Settings',
