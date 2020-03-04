@@ -6,10 +6,15 @@
  */
 class CRM_Civixero_Base {
   private static $singleton;
+  // TODO: remove unneeded OAuth1 properties.
   private $_xero_key;
   private $_xero_secret;
   private $_xero_public_certificate;
   private $_xero_private_key;
+  
+  private $_xero_access_token;
+  private $_xero_tenant_id;
+  
   protected $_plugin = 'xero';
 
   protected $accounts_contact;
@@ -33,11 +38,22 @@ class CRM_Civixero_Base {
   public function __construct($parameters = array()) {
     $force = FALSE;
     $this->connector_id = CRM_Utils_Array::value('connector_id', $parameters, 0);
+    // Currently only default connection (without nz.co.fusion.connectors) is supported.
+    if ($this->connector_id == 0) {
+      $xeroConnect = CRM_Civixero_OAuth2_Xero::singleton();
+      $this->_xero_access_token = $xeroConnect->getToken();
+      $this->_xero_tenant_id = $xeroConnect->getTenantID();
+    }
+    else {
+      // TODO: implement for connectors.
+      throw new CRM_Core_Exception(
+          "Currently only default Xero connection (without nz.co.fusion.connectors) is supported."
+          );
+    }
+    /**
     $variables = array(
-      'xero_key',
-      'xero_secret',
-      'xero_public_certificate',
-      'xero_private_key',
+      'xero_access_token',
+      'xero_tenant_id',
     );
     foreach ($variables as $var) {
       $value = CRM_Utils_Array::value($var, $parameters);
@@ -52,7 +68,8 @@ class CRM_Civixero_Base {
         throw new CRM_Core_Exception($var . ts(' has not been set'));
       }
     }
-    $this->singleton($this->_xero_key, $this->_xero_secret, $this->_xero_public_certificate, $this->_xero_private_key, $this->connector_id, $force);
+    **/
+    $this->singleton($this->_xero_access_token, $this->_xero_tenant_id, $this->connector_id, $force);
   }
 
   /**
@@ -99,19 +116,17 @@ class CRM_Civixero_Base {
   /**
    * Singleton function.
    *
-   * @param string $civixero_key
-   * @param string $civixero_secret
-   * @param string $publicCertificate
-   * @param string $privateKey
+   * @param string $token
+   * @param string $tenant_id
    * @param int $connector_id
    * @param bool $force
    *
    * @return \CRM_Extension_System
    */
-  protected function singleton($civixero_key, $civixero_secret, $publicCertificate, $privateKey, $connector_id, $force = FALSE) {
+  protected function singleton($token, $tenant_id, $connector_id, $force = FALSE) {
     if (!self::$singleton[$connector_id] || $force) {
       require_once 'packages/Xero/Xero.php';
-      self::$singleton[$connector_id] = new Xero($civixero_key, $civixero_secret, $publicCertificate, $privateKey);
+      self::$singleton[$connector_id] = new Xero($token, $tenant_id);
     }
 
     return self::$singleton[$connector_id];
@@ -139,7 +154,7 @@ class CRM_Civixero_Base {
    * @return mixed
    */
   protected function getSetting($var) {
-
+    
     if ($this->connector_id > 0) {
       static $connectors = array();
       if (empty($connectors[$this->connector_id])) {

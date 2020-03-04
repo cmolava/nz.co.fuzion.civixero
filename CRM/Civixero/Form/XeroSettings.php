@@ -17,22 +17,9 @@ class CRM_Civixero_Form_XeroSettings extends CRM_Core_Form {
 
   }
 
-  function addAuthorizationLink() {
-    $settings = $this->setDefaultValues();
-    dpm($settings);
-    if (!empty($settings['xero_client_id']) && !empty($settings['xero_secret'])) {
-      if (empty($settings['xero_refresh_token']) || empty($settings['xero_tenant_id'])) {
-        $this->add('link', 'authorize_link', 'Authorize with Xero', 'https://xero.com/');
-        
-      }
-    }
-
-  }
 
   function buildQuickForm() {
     $settings = $this->getFormSettings();
-    dpm($settings);
-    $this->addAuthorizationLink();
     foreach ($settings as $name => $setting) {
       if (isset($setting['quick_form_type'])) {
         $add = 'add' . $setting['quick_form_type'];

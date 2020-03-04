@@ -1,5 +1,12 @@
 <?php
 use CRM_Civixero_ExtensionUtil as E;
+/**
+ * 
+ * Controls page for handling OAuth 2.0 Authorization with Xero.
+ * 
+ * TODO: Refactor reusable functionality into a separate class.
+ *
+ */
 
 class CRM_Civixero_Page_XeroAuthorize extends CRM_Core_Page {
   private $authorizeURL = 'https://login.xero.com/identity/connect/authorize';
@@ -67,9 +74,9 @@ class CRM_Civixero_Page_XeroAuthorize extends CRM_Core_Page {
       $access_token = new \League\OAuth2\Client\Token\AccessToken($this->accessTokenData);
       $refresh_token = $access_token->getRefreshToken();
     }
+    // We may or may not have valid tokens at this point.
     // If we have a refresh token, test it by getting a new access token
     // and use them to get the tenant ID.
-    // We may or may not have valid tokens at this point.
     if ($refresh_token) {
       try {
         $newAccessToken = $this->provider->getAccessToken('refresh_token', [
@@ -243,7 +250,6 @@ class CRM_Civixero_Page_XeroAuthorize extends CRM_Core_Page {
 
   public function run() {
     $this->init();
-     
     $page_content = '';
     //Check if we have returned from authorization and process data.
     // Do we have a client id
