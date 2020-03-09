@@ -253,6 +253,7 @@ class CRM_Civixero_Page_XeroAuthorize extends CRM_Core_Page {
     $page_content = '';
     //Check if we have returned from authorization and process data.
     // Do we have a client id
+    $link_label = E::ts('Authorize with Xero');
     if (empty($this->clientID) || empty($this->clientSecret)) {
       // Set status
       $page_content = "A Client ID needs to be added in the Xero Settings.";
@@ -260,9 +261,8 @@ class CRM_Civixero_Page_XeroAuthorize extends CRM_Core_Page {
     else {
       $this->processAuthCode();
       if ($this->hasValidTokens) {
-        $status_msg = E::ts("CiviCRM can connect to Xero. You do not need to authorize again at this point.");
-        $status_msg .= '<br />' .E::ts('TenantID: ' . $this->tenantID);
-        $status_msg .= '<br />' . E::ts('Scopes: %1', ['1' => implode(', ', $this->scopes)]);
+        $status_msg = '<strong>' . E::ts("CiviCRM can connect to Xero. You do not need to authorize again at this point.") . '</strong>';
+        $link_label = E::ts('Change Authorized user');
       }
       else {
         $status_msg = E::ts('You will need to Authorize with Xero by clicking the link below.');
@@ -270,7 +270,7 @@ class CRM_Civixero_Page_XeroAuthorize extends CRM_Core_Page {
       }
       $page_content = '<p>' . $status_msg . '</p>';
       $url = $this->getAuthURL();
-      $page_content .= '<a href="' . $url . '"> Authorize With Xero </a>';
+      $page_content .= '<a class="button" href="' . $url . '">' . $link_label . '</a>';
     }
     $this->assign('authorizeLink', $page_content);
 
