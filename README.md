@@ -49,13 +49,13 @@ Before creating the app, it will help to be logged into CiviCRM as well as Xero.
 
 Go to https://developer.xero.com/
 
-On the menu, click on MyApps, then click New app.
+On the menu, click on __MyApps__, then click __New app__.
 
 Use the following details:
 - Company or application URL: https://YOUR-SITE-URL
 - OAuth 2.0 redirect URI: For Drupal installations this will be
   https://YOUR-SITE-URL/civicrm/xero/authorize.
-  For WordPress, copy the url from the link CiviCRM : Administer -> Xero -> Xero Authorize.  
+  For WordPress installations, copy the url from the link CiviCRM : Administer -> Xero -> Xero Authorize.  
 
 After the app is created, click the button to generate a Client Secret.
 Copy the Client ID and the Client Secret, you will need them later.
@@ -64,7 +64,7 @@ Copy the Client ID and the Client Secret, you will need them later.
 ## Setup in CiviCRM
 
 ### CiviXero Settings
-You then need to add the Client ID and Client Secret in the Xero Settings page in CiviCRM (Administer>Xero>Xero Settings)
+You then need to add the __Client ID__ and __Client Secret__ in the Xero Settings page in CiviCRM (Administer>Xero>Xero Settings)
 
 ![Xero Settings](docs/images/xero_settings.png)
 
