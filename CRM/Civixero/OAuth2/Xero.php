@@ -1,5 +1,11 @@
 <?php
-
+/**
+ * Manages OAuth tokens and requests with CiviCRM settings.
+ * 
+ * todo: refactor using CRM_Civixero_OAuth2_Provider_Xero
+ * 
+ *
+ */
 class CRM_Civixero_OAuth2_Xero {
   private static $_instances = [];
   
@@ -93,7 +99,7 @@ class CRM_Civixero_OAuth2_Xero {
     if (!$accessToken) {
       throw new CRM_Core_Exception('No token in store.');
     }
-    if (false && !$accessToken->hasExpired()) {
+    if (!$accessToken->hasExpired()) {
       return $accessToken->getToken();
     }
     $newToken = $this->renewToken($accessToken);
