@@ -39,7 +39,7 @@ To use these extensions on the site, on the CiviCRM menu on the site go to admin
 
 ## Setup XERO OAuth 2.0
 
-You will need to have set up an organisation and an OAuth 2.0 App with XERO.
+You will need to have set up an company/organisation and an OAuth 2.0 App with XERO.
 
 ### Company/Organization
 For testing purposes, you can use the [Xero Demo Company](https://central.xero.com/s/article/Use-the-demo-company)
