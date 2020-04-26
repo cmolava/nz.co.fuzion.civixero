@@ -10,9 +10,6 @@ require_once 'Civixero.civix.php';
 function civixero_civicrm_config(&$config) {
   _civixero_civix_civicrm_config($config);
   require_once __DIR__ . '/vendor/autoload.php';
-  if (!function_exists('random_bytes')) {
-    require_once(__DIR__ . '/vendor/paragonie/random_compat/lib/random.php');
-  }
 }
 
 /**

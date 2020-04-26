@@ -1,5 +1,9 @@
 {
+    "name": "nz.co.fuzion/civixero",
     "require": {
         "league/oauth2-client": "^2.4"
+    },
+    "replace": {
+        "guzzlehttp/guzzle": "*"
     }
 }
